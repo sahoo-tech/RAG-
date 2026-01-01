@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG++ Analytical Reasoning Engine - Cosmic Interface</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div id="aiLoadingScreen" class="ai-loading-screen">
+        <canvas id="neuralCanvas" class="neural-canvas"></canvas>
+
+        <div class="loading-content">
+            <div class="ai-brain">
+                <div class="brain-core"></div>
+                <div class="brain-pulse"></div>
+                <div class="brain-pulse pulse-2"></div>
+                <div class="brain-pulse pulse-3"></div>
+            </div>
+
+            <div class="loading-text">
+                <h1 class="ai-title">
+                    <span class="letter">R</span>
+                    <span class="letter">A</span>
+                    <span class="letter">G</span>
+                    <span class="letter">+</span>
+                    <span class="letter">+</span>
+                </h1>
+                <p class="ai-subtitle">Initializing Neural Networks...</p>
+                <div class="loading-bar">
+                    <div class="loading-progress"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Animated Space Background -->
+    <div class="space-background">
+        <div class="stars"></div>
+        <div class="stars2"></div>
+        <div class="stars3"></div>
+        <div class="nebula"></div>
+    </div>
+
+    <!-- Animated Solar System -->
+    <div class="solar-system">
+        <div class="sun"></div>
+        <div class="orbit orbit-1">
+            <div class="planet planet-1"></div>
+        </div>
+        <div class="orbit orbit-2">
+            <div class="planet planet-2"></div>
+        </div>
+        <div class="orbit orbit-3">
+            <div class="planet planet-3"></div>
+        </div>
+        <div class="orbit orbit-4">
+            <div class="planet planet-4"></div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-container">
+                <div class="logo-orbit">
+                    <div class="logo-core"></div>
+                </div>
+                <h1 class="logo-text">RAG++ <span class="subtitle">Analytical Reasoning Engine</span></h1>
+            </div>
+            <div class="status-indicator">
+                <div class="status-dot" id="statusDot"></div>
+                <span id="statusText">Connecting...</span>
+            </div>
+        </header>
+
+        <!-- Mode Switcher -->
+        <div class="mode-switcher">
+            <button class="mode-btn active" data-mode="analytics" id="analyticsBtn">
+                <svg class="mode-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                </svg>
+                <span>Analytics</span>
+            </button>
+            <button class="mode-btn" data-mode="chat" id="chatBtn">
+                <svg class="mode-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+                <span>AI Chat</span>
+            </button>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Chat Interface (Hidden by default) -->
+            <section class="chat-interface" id="chatInterface" style="display: none;">
+                <div class="chat-container">
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="welcome-message">
+                            <div class="welcome-icon">🤖</div>
+                            <h3>AI Assistant Ready</h3>
+                            <p>Powered by Ollama - Ask me anything!</p>
+                        </div>
+                    </div>
+                    <div class="chat-input-container">
+                        <textarea id="chatInput"
+                            placeholder="Type your message... (Press Enter to send, Shift+Enter for new line)"
+                            rows="1"></textarea>
+                        <button id="sendChatBtn" class="send-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Analytics Interface (Default) -->
+            <div id="analyticsInterface">
+                <!-- Query Input Section -->
+                <section class="query-section">
+                    <div class="section-header">
+                        <div class="icon-wrapper">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
+                            </svg>
+                        </div>
+                        <h2>Analytical Query Interface</h2>
+                    </div>
+
+                    <div class="input-container">
+                        <textarea id="queryInput"
+                            placeholder="Enter your analytical query... (e.g., 'What is the trend in revenue over the last quarter?')"
+                            rows="3"></textarea>
+                        <div class="input-controls">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="explainabilityToggle">
+                                <span class="checkmark"></span>
+                                <span class="label-text">Include Explainability</span>
+                            </label>
+                            <button id="submitBtn" class="submit-btn">
+                                <span class="btn-text">Analyze</span>
+                                <div class="btn-glow"></div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quick Query Suggestions -->
+                    <div class="suggestions">
+                        <span class="suggestions-label">Quick Queries:</span>
+                        <button class="suggestion-chip"
+                            data-query="What is the trend in revenue over the last quarter?">
+                            📈 Revenue Trend
+                        </button>
+                        <button class="suggestion-chip"
+                            data-query="Compare customer retention between enterprise and consumer segments">
+                            🔄 Segment Comparison
+                        </button>
+                        <button class="suggestion-chip" data-query="Show me user engagement breakdown by segment">
+                            📊 Engagement Analysis
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Loading Animation -->
+                <div class="loading-container" id="loadingContainer" style="display: none;">
+                    <div class="cosmic-loader">
+                        <div class="cosmic-ring"></div>
+                        <div class="cosmic-ring"></div>
+                        <div class="cosmic-ring"></div>
+                        <div class="cosmic-core"></div>
+                    </div>
+                    <p class="loading-text">Processing through multi-agent reasoning...</p>
+                    <div class="processing-steps" id="processingSteps"></div>
+                </div>
+
+                <!-- Results Section -->
+                <section class="results-section" id="resultsSection" style="display: none;">
+                    <div class="section-header">
+                        <div class="icon-wrapper">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                            </svg>
+                        </div>
+                        <h2>Analysis Results</h2>
+                    </div>
+
+                    <!-- Confidence Meter -->
+                    <div class="confidence-meter">
+                        <div class="meter-header">
+                            <span class="meter-label">Confidence Level</span>
+                            <span class="meter-value" id="confidenceValue">--</span>
+                        </div>
+                        <div class="meter-bar">
+                            <div class="meter-fill" id="confidenceFill"></div>
+                        </div>
+                        <div class="meter-stats">
+                            <div class="stat">
+                                <span class="stat-label">Coverage</span>
+                                <span class="stat-value" id="coverageValue">--</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">Completeness</span>
+                                <span class="stat-value" id="completenessValue">--</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-label">Evidence</span>
+                                <span class="stat-value" id="evidenceValue">--</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Answer Display -->
+                    <div class="answer-card">
+                        <h3 class="answer-title">Answer</h3>
+                        <div class="answer-content" id="answerContent"></div>
+                    </div>
+
+                    <!-- Explainability Section -->
+                    <div class="explainability-section" id="explainabilitySection" style="display: none;">
+                        <h3 class="section-title">Reasoning Process</h3>
+                        <div class="explainability-content" id="explainabilityContent"></div>
+                    </div>
+
+                    <!-- Metadata -->
+                    <div class="metadata">
+                        <div class="metadata-item">
+                            <span class="metadata-label">Processing Time</span>
+                            <span class="metadata-value" id="processingTime">--</span>
+                        </div>
+                        <div class="metadata-item">
+                            <span class="metadata-label">Timestamp</span>
+                            <span class="metadata-value" id="timestamp">--</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Error Display -->
+                <div class="error-container" id="errorContainer" style="display: none;">
+                    <div class="error-icon">⚠️</div>
+                    <h3>Error</h3>
+                    <p id="errorMessage"></p>
+                </div>
+            </div><!-- End Analytics Interface -->
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>RAG++ Analytical Reasoning Engine v1.0.0 | Fully Local Execution</p>
+            <div class="footer-links">
+                <a href="http://localhost:8000/docs" target="_blank">API Docs</a>
+                <a href="http://localhost:8000/health" target="_blank">Health Check</a>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
